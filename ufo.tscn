@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://l760cj6ngmge"]
+
+[ext_resource type="Texture2D" uid="uid://dnaen4ps4twpd" path="res://art/ufo_1.png" id="1_jk7cj"]
+[ext_resource type="Script" path="res://ufo.gd" id="1_p16c7"]
+[ext_resource type="Texture2D" uid="uid://4u2o83qnp6yv" path="res://art/ufo_2.png" id="2_iqrau"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rnxvc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_jk7cj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_iqrau")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="UFO" type="RigidBody2D"]
+script = ExtResource("1_p16c7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(7.62939e-06, 3.8147e-06)
+scale = Vector2(0.470703, 0.431641)
+sprite_frames = SubResource("SpriteFrames_rnxvc")
+frame_progress = 0.0189972

@@ -1,0 +1,91 @@
+[gd_scene load_steps=10 format=3 uid="uid://wlidr8twc7nn"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_2lauo"]
+[ext_resource type="PackedScene" uid="uid://cdow01wtsilb" path="res://player.tscn" id="1_48w4l"]
+[ext_resource type="PackedScene" uid="uid://c7ecayb37iu0b" path="res://mob.tscn" id="2_oi01c"]
+[ext_resource type="PackedScene" uid="uid://cyvukc2k5kjks" path="res://hud.tscn" id="4_ipj40"]
+[ext_resource type="AudioStream" uid="uid://bg0soroalpkcv" path="res://art/House In a Forest Loop.ogg" id="5_68van"]
+[ext_resource type="AudioStream" uid="uid://ww1wwqsvhs1m" path="res://art/gameover.wav" id="6_qbt0h"]
+[ext_resource type="PackedScene" uid="uid://l760cj6ngmge" path="res://ufo.tscn" id="7_plqmw"]
+
+[sub_resource type="Curve2D" id="Curve2D_bs1ak"]
+_data = {
+"points": PackedVector2Array(-351.495, -349.813, 351.495, 349.813, -3, -5, 50.4538, -151.361, -50.4538, 151.361, 473, 0, -210.224, -8.40896, 210.224, 8.40896, 477, 716, -205.179, 16.8179, 205.179, -16.8179, -1, 708, 0, 0, 0, 0, -3, -5)
+}
+point_count = 5
+
+[sub_resource type="Curve2D" id="Curve2D_uh2j0"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 362.9, 467.764)
+}
+point_count = 1
+
+[node name="Main" type="Node"]
+script = ExtResource("1_2lauo")
+mob_scene = ExtResource("2_oi01c")
+ufo_scene = ExtResource("7_plqmw")
+metadata/_edit_vertical_guides_ = [27.0]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.145098, 0.235294, 0.294118, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_48w4l")]
+position = Vector2(-1, 0)
+
+[node name="UFOTimer" type="Timer" parent="."]
+wait_time = 60.0
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="ForceFieldTimer" type="Timer" parent="."]
+wait_time = 10.0
+
+[node name="StartPosition" type="Marker2D" parent="."]
+visible = false
+position = Vector2(240, 450)
+
+[node name="MobPath" type="Path2D" parent="."]
+position = Vector2(-1, 0)
+curve = SubResource("Curve2D_bs1ak")
+
+[node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
+visible = false
+position = Vector2(-3, -5)
+rotation = 0.783
+
+[node name="UFOPath" type="Path2D" parent="."]
+position = Vector2(-6, -4)
+rotation = 0.00618549
+curve = SubResource("Curve2D_uh2j0")
+
+[node name="UFOSpawnLocation" type="PathFollow2D" parent="UFOPath"]
+position = Vector2(132.931, 150.181)
+rotation = 0.573113
+
+[node name="HUD" parent="." instance=ExtResource("4_ipj40")]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_68van")
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_qbt0h")
+
+[connection signal="hit" from="Player" to="." method="game_over"]
+[connection signal="timeout" from="UFOTimer" to="." method="_on_ufo_timer_timeout"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]
+[connection signal="finished" from="Music" to="." method="_on_music_finished"]

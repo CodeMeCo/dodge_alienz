@@ -1,0 +1,68 @@
+[gd_scene load_steps=10 format=3 uid="uid://c7ecayb37iu0b"]
+
+[ext_resource type="Script" path="res://mob.gd" id="1_vd5cc"]
+[ext_resource type="Texture2D" uid="uid://xsqjxm4wv2t6" path="res://art/enemyFlyingAlt_1.png" id="2_mwsij"]
+[ext_resource type="Texture2D" uid="uid://c1ibc4w7upshv" path="res://art/enemyFlyingAlt_2.png" id="3_qeukb"]
+[ext_resource type="Texture2D" uid="uid://b8ej0v4t2tvfb" path="res://art/enemySwimming_1.png" id="4_fiix8"]
+[ext_resource type="Texture2D" uid="uid://c8t56lqr5qv0i" path="res://art/enemySwimming_2.png" id="5_1mnl0"]
+[ext_resource type="Texture2D" uid="uid://jpn4o4osnkyu" path="res://art/enemyWalking_1.png" id="6_pf7yx"]
+[ext_resource type="Texture2D" uid="uid://coe4avhwjgj37" path="res://art/enemyWalking_2.png" id="7_ma354"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tdkli"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_mwsij")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_qeukb")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_fiix8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1mnl0")
+}],
+"loop": true,
+"name": &"swim",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_pf7yx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ma354")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3s31y"]
+radius = 26.8353
+height = 88.7389
+
+[node name="Mob" type="RigidBody2D"]
+rotation = 1.5708
+scale = Vector2(2.75756, -0.924058)
+collision_mask = 0
+script = ExtResource("1_vd5cc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_tdkli")
+animation = &"fly"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.3113e-06, -1.08218)
+shape = SubResource("CapsuleShape2D_3s31y")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(1.61814, 2.22799)
+scale = Vector2(1.29911, 2.19041)

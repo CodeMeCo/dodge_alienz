@@ -1,0 +1,79 @@
+[gd_scene load_steps=12 format=3 uid="uid://cdow01wtsilb"]
+
+[ext_resource type="Texture2D" uid="uid://dmx5t01yeqj3b" path="res://art/playerGrey_up1.png" id="1_4uxy7"]
+[ext_resource type="Script" path="res://player.gd" id="1_53ya3"]
+[ext_resource type="Texture2D" uid="uid://drjlvqn4675ok" path="res://art/playerGrey_up2.png" id="2_0tm14"]
+[ext_resource type="Texture2D" uid="uid://dey8ixp3828e6" path="res://art/playerGrey_walk1.png" id="3_vclmb"]
+[ext_resource type="Texture2D" uid="uid://c6skfbqpre0tw" path="res://art/playerGrey_walk2.png" id="4_m1qj0"]
+[ext_resource type="Texture2D" uid="uid://bxxjiy8wc2h2l" path="res://icon.svg" id="6_80s06"]
+[ext_resource type="Texture2D" uid="uid://de0oma8hf6nxf" path="res://art/forceField_1.png" id="7_eddqt"]
+[ext_resource type="Texture2D" uid="uid://dixjsjtmlqsyf" path="res://art/forceField_2.png" id="8_2uprd"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hat8x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_4uxy7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_0tm14")
+}],
+"loop": true,
+"name": &"up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_vclmb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_m1qj0")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i1q8n"]
+radius = 819.185
+height = 1888.6
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jrtaf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_eddqt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2uprd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Player" type="Area2D"]
+scale = Vector2(0.0692001, 0.170591)
+script = ExtResource("1_53ya3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 1.52588e-05)
+scale = Vector2(-12.9987, 3.92337)
+sprite_frames = SubResource("SpriteFrames_hat8x")
+animation = &"walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.846745, 0.285557)
+shape = SubResource("CapsuleShape2D_i1q8n")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(135669, 21729.8)
+scale = Vector2(0.43348, 2.16734)
+texture = ExtResource("6_80s06")
+
+[node name="ForceField" type="AnimatedSprite2D" parent="."]
+scale = Vector2(8.58093, -3.52885)
+sprite_frames = SubResource("SpriteFrames_jrtaf")
+frame_progress = 0.40516
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
